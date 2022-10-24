@@ -21,7 +21,13 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".Registro"
+            android:name=".OlviPass"
+            android:exported="false" />
+        <activity
+            android:name=".RegistroUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".RegistroSelect"
             android:exported="false" />
         <activity android:name=".Login" />
         <activity
