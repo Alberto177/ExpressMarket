@@ -1,6 +1,7 @@
 package com.example.expressmarket;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -175,8 +176,8 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
         startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
     }
 
-
-    private void detecLocation() {
+//revisar
+    private void detecLocation(){
         Toast.makeText(this, "Por favor espera...", Toast.LENGTH_SHORT).show();
         locationManager= (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
@@ -231,7 +232,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
         findDireccion();
 
     }
-
+///Revisar
     private void findDireccion() {
         //Encontrar estado y ciudad
         Geocoder geocoder;
@@ -261,7 +262,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
     }
 
     @Override
-    public void onProviderEnabled(@NonNull String provider) {
+    public void onProviderEnabled(String provider) {
 
     }
 
@@ -301,10 +302,37 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
                 }
             }
             break;
+            case STORAGE_REQUEST_CODE:{
+                if (grantResults.length>0){
+                    boolean storageAccepted= grantResults[0] ==PackageManager.PERMISSION_GRANTED;
+                    if (storageAccepted){
+                        //permiso aceptados
+                        pickFromGallery();
+                    }else{
+                        //permisos denegados
+                        Toast.makeText(this, "Los permisos de galeria son necesarios", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            break;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode== RESULT_OK){
+            if (requestCode== IMAGE_PICK_GALLERY_CODE){
+                //toma la imagen
+                image_uri= data.getData();
+                //manda la imagen
+                perfil.setImageURI(image_uri);
+            }else if (requestCode== IMAGE_PICK_CAMERA_CODE){
+                perfil.setImageURI(image_uri);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
 
+    }
 }
