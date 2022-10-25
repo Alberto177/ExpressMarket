@@ -2,12 +2,14 @@ package com.example.expressmarket;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class RegistroUsuario extends AppCompatActivity {
 
@@ -15,6 +17,7 @@ public class RegistroUsuario extends AppCompatActivity {
     private ImageView perfil;
     private EditText name, phone, estado,ciudad, direccion, correo, pass, cpass;
     private Button registrar;
+    private TextView regVende;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,7 @@ public class RegistroUsuario extends AppCompatActivity {
         pass= findViewById(R.id.passwordEt);
         cpass= findViewById(R.id.cpasswordEt);
         registrar= findViewById(R.id.registroBtn);
+        regVende=findViewById(R.id.regisVendtTv);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +59,13 @@ public class RegistroUsuario extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //registro de usuario
+            }
+        });
+        regVende.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //abre la ventana del registro de vendedor
+                startActivity(new Intent(RegistroUsuario.this, RegistroVendedor.class));
             }
         });
     }

@@ -91,7 +91,6 @@
 
     <LinearLayout
         android:id="@+id/addressLl"
-        android:layout_margin="5dp"
         android:layout_below="@id/phoneEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
