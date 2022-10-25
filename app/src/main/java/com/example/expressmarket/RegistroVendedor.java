@@ -34,10 +34,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.List;
@@ -243,12 +247,93 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
 
             //save
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-            ref.child(firebaseAuth.getUid())
+            ref.child(firebaseAuth.getUid()).setValue(hashMap)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            //base actualizada
+                            progressDialog.dismiss();
+                            startActivity(new Intent(RegistroVendedor.this, MainVendedor.class));
+                            finish();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //error al  actualizar base
+                            progressDialog.dismiss();
+                            startActivity(new Intent(RegistroVendedor.this, MainVendedor.class));
+                            finish();
+
+                        }
+                    });
         }else{
             //guarda informacion con imagen
 
+            //nombre y ruta de la imagen
+            String filePathAndName= "profiel_images/"+ ""+firebaseAuth.getUid();
+            //subir imagen
+            StorageReference storageReference= FirebaseStorage.getInstance().getReference(filePathAndName);
+            storageReference.putFile(image_uri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                             //obtener url para subir la imagen
+                            Task<Uri> uriTask= taskSnapshot.getStorage().getDownloadUrl();
+                            while(!uriTask.isSuccessful());
+                            Uri downloadImageUri = uriTask.getResult();
 
+                            if (uriTask.isSuccessful()){
+                                //configurar los datos a guardar
+                                HashMap<String, Object> hashMap= new HashMap<>();
+                                hashMap.put("uid",""+firebaseAuth.getUid());
+                                hashMap.put("email",""+emaild);
+                                hashMap.put("nombre",""+nameTiendad);
+                                hashMap.put("phone",""+phoned);
+                                hashMap.put("envio",""+gastoEnvd);
+                                hashMap.put("estado",""+estadod);
+                                hashMap.put("ciudad",""+ciudadd);
+                                hashMap.put("direccion",""+direcciond);
+                                hashMap.put("latitud",""+latitud);
+                                hashMap.put("longitud",""+longitud);
+                                hashMap.put("timestamp",""+timestamp);
+                                hashMap.put("tipo",""+"Vendedor");
+                                hashMap.put("online","true");
+                                hashMap.put("shopOpen","true");
+                                hashMap.put("imagen","" +downloadImageUri); //url para subir la imagen
 
+                                //save
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                                ref.child(firebaseAuth.getUid()).setValue(hashMap)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                //base actualizada
+                                                progressDialog.dismiss();
+                                                startActivity(new Intent(RegistroVendedor.this, MainVendedor.class));
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                //error al  actualizar base
+                                                progressDialog.dismiss();
+                                                startActivity(new Intent(RegistroVendedor.this, MainVendedor.class));
+                                                finish();
+
+                                            }
+                                        });
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(RegistroVendedor.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 
