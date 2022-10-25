@@ -158,7 +158,7 @@
 
     <EditText
         android:id="@+id/cpasswordEt"
-        android:layout_below="@+id/emailEt"
+        android:layout_below="@+id/passwordEt"
         android:hint="Confirme su Password"
         android:padding="10dp"
         android:drawableStart="@drawable/ic_lock_gray"
@@ -169,15 +169,6 @@
         android:inputType="textPassword"
         android:background="@drawable/shape_rect02"/>
 
-    <TextView
-        android:id="@+id/forgotTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Olvidaste tu password?"
-        android:layout_below="@id/passwordEt"
-        android:layout_alignParentEnd="true"/>
-
     <Button
         android:id="@+id/loginBtn"
         android:text="Login"
@@ -186,13 +177,13 @@
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/forgotTv"/>
+        android:layout_below="@id/cpasswordEt"/>
     <TextView
         android:id="@+id/noAccountTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="No tienes cuenta? Registrate"
+        android:text="Eres un Vendedor? Registrate"
         android:layout_below="@id/passwordEt"
         android:layout_alignParentBottom="true"/>
 

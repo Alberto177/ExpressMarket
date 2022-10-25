@@ -27,7 +27,7 @@
             android:name=".RegistroUsuario"
             android:exported="false" />
         <activity
-            android:name=".RegistroSelect"
+            android:name=".RegistroVendedor"
             android:exported="false" />
         <activity android:name=".Login" />
         <activity
