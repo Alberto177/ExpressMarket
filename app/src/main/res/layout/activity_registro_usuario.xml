@@ -60,7 +60,7 @@
         android:layout_below="@+id/perfilIv"
         android:hint="Nombre Completo"
         android:padding="10dp"
-        android:drawableStart="@drawable/ic_mail_gray"
+        android:drawableStart="@drawable/ic_person_gray"
         android:drawablePadding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
         android:layout_below="@+id/nameEt"
         android:hint="Telefono"
         android:padding="10dp"
-        android:drawableStart="@drawable/ic_mail_gray"
+        android:drawableStart="@drawable/ic_phone_gray"
         android:drawablePadding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,10 +91,9 @@
 
         <EditText
             android:id="@+id/EstadoEt"
-            android:layout_below="@+id/nameEt"
             android:hint="Estado"
             android:padding="10dp"
-            android:drawableStart="@drawable/ic_mail_gray"
+            android:drawableStart="@drawable/ic_location_gray"
             android:drawablePadding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,10 +102,9 @@
             android:background="@drawable/shape_rect02"/>
         <EditText
             android:id="@+id/ciudadEt"
-            android:layout_below="@+id/nameEt"
             android:hint="Ciudad"
             android:padding="10dp"
-            android:drawableStart="@drawable/ic_mail_gray"
+            android:drawableStart="@drawable/ic_location_gray"
             android:drawablePadding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,7 +120,7 @@
         android:layout_below="@+id/addressLl"
         android:hint="Direccion"
         android:padding="10dp"
-        android:drawableStart="@drawable/ic_lock_gray"
+        android:drawableStart="@drawable/ic_location_gray"
         android:drawablePadding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -135,7 +133,7 @@
         android:layout_below="@+id/addresEt"
         android:hint="Email"
         android:padding="10dp"
-        android:drawableStart="@drawable/ic_lock_gray"
+        android:drawableStart="@drawable/ic_mail_gray"
         android:drawablePadding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -170,8 +168,8 @@
         android:background="@drawable/shape_rect02"/>
 
     <Button
-        android:id="@+id/loginBtn"
-        android:text="Login"
+        android:id="@+id/registroBtn"
+        android:text="Registrar"
         style="@style/Widget.AppCompat.Button.Colored"
         android:minWidth="120dp"
         android:layout_centerHorizontal="true"
@@ -179,11 +177,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/cpasswordEt"/>
     <TextView
-        android:id="@+id/noAccountTv"
+        android:id="@+id/regisVendtTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Eres un Vendedor? Registrate"
+        android:text="Eres un Vendedor? Registrate en Vendedor"
         android:layout_below="@id/passwordEt"
         android:layout_alignParentBottom="true"/>
 
