@@ -22,6 +22,8 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,8 +32,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -135,6 +147,179 @@ public class RegistroUsuario extends AppCompatActivity implements LocationListen
                 startActivity(new Intent(RegistroUsuario.this, RegistroVendedor.class));
             }
         });
+    }
+
+    private String nombred, phoned, ciudadd, estadod, direcciond, emaild, passd, cpassd;
+    private void inputData() {
+        //imput data
+        nombred= name.getText().toString().trim();
+        phoned= phone.getText().toString().trim();
+        ciudadd= ciudad.getText().toString().trim();
+        estadod= estado.getText().toString().trim();
+        direcciond= direccion.getText().toString().trim();
+        emaild= correo.getText().toString().trim();
+        passd= pass.getText().toString().trim();
+        cpassd= cpass.getText().toString().trim();
+        //validacion
+        if (TextUtils.isEmpty(nombred)){
+            Toast.makeText(this, "Ingrese su nombre", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(phoned)){
+            Toast.makeText(this, "Ingrese su telefono", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(direcciond)){
+            Toast.makeText(this, "Ingrese su direccion", Toast.LENGTH_SHORT).show();
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(emaild).matches()){
+            Toast.makeText(this, "Email invalido", Toast.LENGTH_SHORT).show();
+        }
+        if (passd.length()<6){
+            Toast.makeText(this, "La contrasena debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+        }
+        if (!pass.equals(cpassd)){
+            Toast.makeText(this, "Las contrasenas no coinciden", Toast.LENGTH_SHORT).show();
+        }
+        if(latitud==0.0 || longitud==0.0){
+            Toast.makeText(this, "Por favor presiona el GPS para detectar su ubicacion", Toast.LENGTH_SHORT).show();
+        }
+        createAccount();
+
+    }
+
+    private void createAccount() {
+        progressDialog.setMessage("Creando cuenta...");
+        progressDialog.show();
+
+        //creacion de cuenta
+        firebaseAuth.createUserWithEmailAndPassword(emaild,passd)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        //creacion de cuenta
+                        saverFirebaseData();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Cuenta no creada
+                        progressDialog.dismiss();
+                        Toast.makeText(RegistroUsuario.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void saverFirebaseData() {
+        progressDialog.setMessage("Informacion de cuenta");
+
+        String timestamp= ""+System.currentTimeMillis();
+        if (image_uri==null){
+            //guardar informacion sin imagen
+
+            //configurar los datos a guardar
+            HashMap<String, Object> hashMap= new HashMap<>();
+            hashMap.put("uid",""+firebaseAuth.getUid());
+            hashMap.put("email",""+emaild);
+            hashMap.put("phone",""+phoned);
+            hashMap.put("estado",""+estadod);
+            hashMap.put("ciudad",""+ciudadd);
+            hashMap.put("direccion",""+direcciond);
+            hashMap.put("latitud",""+latitud);
+            hashMap.put("longitud",""+longitud);
+            hashMap.put("timestamp",""+timestamp);
+            hashMap.put("tipo",""+"Usuario");
+            hashMap.put("online","true");
+            hashMap.put("imagen","");
+
+            //save
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+            ref.child(firebaseAuth.getUid()).setValue(hashMap)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            //base actualizada
+                            progressDialog.dismiss();
+                            startActivity(new Intent(RegistroUsuario.this, MainUsuario.class));
+                            finish();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //error al  actualizar base
+                            progressDialog.dismiss();
+                            startActivity(new Intent(RegistroUsuario.this, MainUsuario.class));
+                            finish();
+
+                        }
+                    });
+        }else{
+            //guarda informacion con imagen
+
+            //nombre y ruta de la imagen
+            String filePathAndName= "profiel_images/"+ ""+firebaseAuth.getUid();
+            //subir imagen
+            StorageReference storageReference= FirebaseStorage.getInstance().getReference(filePathAndName);
+            storageReference.putFile(image_uri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //obtener url para subir la imagen
+                            Task<Uri> uriTask= taskSnapshot.getStorage().getDownloadUrl();
+                            while(!uriTask.isSuccessful());
+                            Uri downloadImageUri = uriTask.getResult();
+
+                            if (uriTask.isSuccessful()){
+                                //configurar los datos a guardar
+                                HashMap<String, Object> hashMap= new HashMap<>();
+                                hashMap.put("uid",""+firebaseAuth.getUid());
+                                hashMap.put("email",""+emaild);
+                                hashMap.put("phone",""+phoned);
+                                hashMap.put("estado",""+estadod);
+                                hashMap.put("ciudad",""+ciudadd);
+                                hashMap.put("direccion",""+direcciond);
+                                hashMap.put("latitud",""+latitud);
+                                hashMap.put("longitud",""+longitud);
+                                hashMap.put("timestamp",""+timestamp);
+                                hashMap.put("tipo",""+"Usuario");
+                                hashMap.put("online","true");
+                                hashMap.put("imagen","" +downloadImageUri); //url para subir la imagen
+
+                                //save
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                                ref.child(firebaseAuth.getUid()).setValue(hashMap)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                //base actualizada
+                                                progressDialog.dismiss();
+                                                startActivity(new Intent(RegistroUsuario.this, MainUsuario.class));
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                //error al  actualizar base
+                                                progressDialog.dismiss();
+                                                startActivity(new Intent(RegistroUsuario.this, MainUsuario.class));
+                                                finish();
+
+                                            }
+                                        });
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(RegistroUsuario.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
     private void showImagePickDialog() {
@@ -256,14 +441,14 @@ public class RegistroUsuario extends AppCompatActivity implements LocationListen
         try {
             addresses= geocoder.getFromLocation(latitud,longitud,1);
 
-            String direccion= addresses.get(0).getAddressLine(0); //direccion completa
-            String ciudad= addresses.get(0).getLocality();
-            String estado= addresses.get(0).getAdminArea();
+            String direccionn= addresses.get(0).getAddressLine(0); //direccion completa
+            String ciudadn= addresses.get(0).getLocality();
+            String estadon= addresses.get(0).getAdminArea();
 
             //Colocar direccion
-            estado.setText(estado);
-            ciudad.setText(ciudad);
-            direccion.setTetext(direccion);
+            estado.setText(estadon);
+            ciudad.setText(ciudadn);
+            direccion.setText(direccionn);
         }
         catch (Exception e){
             Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();

@@ -151,8 +151,8 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
         //imput data
         nombred= name.getText().toString().trim();
         nameTiendad= shopname.getText().toString().trim();
-        phoned= phone.getText().toString().toString();
-        gastoEnvd= envio.toString().toString().trim();
+        phoned= phone.getText().toString().trim();
+        gastoEnvd= envio.toString().trim();
         ciudadd= ciudad.getText().toString().trim();
         estadod= estado.getText().toString().trim();
         direcciond= direccion.getText().toString().trim();
@@ -191,10 +191,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
         if(latitud==0.0 || longitud==0.0){
             Toast.makeText(this, "Por favor presiona el GPS para detectar su ubicacion", Toast.LENGTH_SHORT).show();
         }
-
         createAccount();
-
-
     }
 
     private void createAccount() {
@@ -456,14 +453,14 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
         try {
             addresses= geocoder.getFromLocation(latitud,longitud,1);
 
-            String direccion= addresses.get(0).getAddressLine(0); //direccion completa
-            String ciudad= addresses.get(0).getLocality();
-            String estado= addresses.get(0).getAdminArea();
+            String direccionn= addresses.get(0).getAddressLine(0); //direccion completa
+            String ciudadn= addresses.get(0).getLocality();
+            String estadon= addresses.get(0).getAdminArea();
 
             //Colocar direccion
-            estado.setText(estado);
-            ciudad.setText(ciudad);
-            direccion.setTetext(direccion);
+            estado.setText(estadon);
+            ciudad.setText(ciudadn);
+            direccion.setText(direccionn);
         }
         catch (Exception e){
             Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
