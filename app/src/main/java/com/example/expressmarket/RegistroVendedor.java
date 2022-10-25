@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,12 +23,16 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 import java.util.Locale;
@@ -56,9 +61,12 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
     //tomar foto
     private Uri image_uri;
 
-    private double latitud, longitud;
+    private double latitud=0.0, longitud=0.0;
 
     private LocationManager locationManager;
+
+    private FirebaseAuth firebaseAuth;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +94,10 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
         Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+        firebaseAuth= FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Por favor espere un momento");
+        progressDialog.setCanceledOnTouchOutside(false);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,8 +130,60 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
             @Override
             public void onClick(View view) {
                 //registro de usuario
+                inputData();
             }
         });
+
+    }
+
+    private String nombred, nameTiendad, phoned, gastoEnvd, ciudadd, estadod, direcciond, emaild, passd, cpassd;
+    private void inputData() {
+        //imput data
+        nombred= name.getText().toString().trim();
+        nameTiendad= shopname.getText().toString().trim();
+        phoned= phone.getText().toString().toString();
+        gastoEnvd= envio.toString().toString().trim();
+        ciudadd= ciudad.getText().toString().trim();
+        estadod= estado.getText().toString().trim();
+        direcciond= direccion.getText().toString().trim();
+        emaild= email.getText().toString().trim();
+        passd= pass.getText().toString().trim();
+        cpassd= cpass.getText().toString().trim();
+        //validacion
+        if (TextUtils.isEmpty(nombred)){
+            Toast.makeText(this, "Ingrese su nombre", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(nameTiendad)){
+            Toast.makeText(this, "Ingrese el nombre de la tienda", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(phoned)){
+            Toast.makeText(this, "Ingrese su telefono", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(gastoEnvd)){
+            Toast.makeText(this, "Ingrese su gasto de envio", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(direcciond)){
+            Toast.makeText(this, "Ingrese su direccion", Toast.LENGTH_SHORT).show();
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(emaild).matches()){
+            Toast.makeText(this, "Email invalido", Toast.LENGTH_SHORT).show();
+        }
+        if (passd.length()<6){
+            Toast.makeText(this, "La contrasena debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+        }
+        if (!pass.equals(cpassd)){
+            Toast.makeText(this, "Las contrasenas no coinciden", Toast.LENGTH_SHORT).show();
+        }
+        if(latitud==0.0 || longitud==0.0){
+            Toast.makeText(this, "Por favor presiona el GPS para detectar su ubicacion", Toast.LENGTH_SHORT).show();
+        }
+
+        create
+
 
     }
 

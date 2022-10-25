@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +29,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 import java.util.Locale;
@@ -60,6 +63,9 @@ public class RegistroUsuario extends AppCompatActivity implements LocationListen
 
     private LocationManager locationManager;
 
+    private FirebaseAuth firebaseAuth;
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +90,11 @@ public class RegistroUsuario extends AppCompatActivity implements LocationListen
         cameraPermissions= new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        firebaseAuth= FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Por favor espere un momento");
+        progressDialog.setCanceledOnTouchOutside(false);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
