@@ -32,8 +32,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -182,9 +188,68 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
             Toast.makeText(this, "Por favor presiona el GPS para detectar su ubicacion", Toast.LENGTH_SHORT).show();
         }
 
-        create
+        createAccount();
 
 
+    }
+
+    private void createAccount() {
+        progressDialog.setMessage("Creando cuenta...");
+                progressDialog.show();
+
+        //creacion de cuenta
+        firebaseAuth.createUserWithEmailAndPassword(emaild,passd)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        //creacion de cuenta
+                        saverFirebaseData();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Cuenta no creada
+                        progressDialog.dismiss();
+                        Toast.makeText(RegistroVendedor.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void saverFirebaseData() {
+        progressDialog.setMessage("Informacion de cuenta");
+
+        String timestamp= ""+System.currentTimeMillis();
+        if (image_uri==null){
+            //guardar informacion sin imagen
+
+            //configurar los datos a guardar
+            HashMap<String, Object> hashMap= new HashMap<>();
+            hashMap.put("uid",""+firebaseAuth.getUid());
+            hashMap.put("email",""+emaild);
+            hashMap.put("nombre",""+nameTiendad);
+            hashMap.put("phone",""+phoned);
+            hashMap.put("envio",""+gastoEnvd);
+            hashMap.put("estado",""+estadod);
+            hashMap.put("ciudad",""+ciudadd);
+            hashMap.put("direccion",""+direcciond);
+            hashMap.put("latitud",""+latitud);
+            hashMap.put("longitud",""+longitud);
+            hashMap.put("timestamp",""+timestamp);
+            hashMap.put("tipo",""+"Vendedor");
+            hashMap.put("online","true");
+            hashMap.put("shopOpen","true");
+            hashMap.put("imagen","");
+
+            //save
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+            ref.child(firebaseAuth.getUid())
+        }else{
+            //guarda informacion con imagen
+
+
+
+        }
     }
 
     private void showImagePickDialog() {
