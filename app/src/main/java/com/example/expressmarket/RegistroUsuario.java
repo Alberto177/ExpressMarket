@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Locale;
 
-public class RegistroUsuario extends AppCompatActivity {
+public class RegistroUsuario extends AppCompatActivity implements LocationListener {
 
     private ImageButton back,gps;
     private ImageView perfil;
