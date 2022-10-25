@@ -448,7 +448,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
         //Encontrar estado y ciudad
         Geocoder geocoder;
         List<Address> addresses;
-        geocoder= new Geocoder((this, Locale.getDefault()));
+        geocoder= new Geocoder(this, Locale.getDefault());
 
         try {
             addresses= geocoder.getFromLocation(latitud,longitud,1);
