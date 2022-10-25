@@ -264,7 +264,7 @@ public class RegistroUsuario extends AppCompatActivity {
     }
 
     @Override
-    public void onProviderEnabled(@NonNull String provider) {
+    public void onProviderEnabled(String provider) {
 
     }
 
