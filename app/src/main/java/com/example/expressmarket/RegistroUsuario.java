@@ -222,6 +222,7 @@ public class RegistroUsuario extends AppCompatActivity implements LocationListen
             HashMap<String, Object> hashMap= new HashMap<>();
             hashMap.put("uid",""+firebaseAuth.getUid());
             hashMap.put("email",""+emaild);
+            hashMap.put("name",""+nombred);
             hashMap.put("phone",""+phoned);
             hashMap.put("estado",""+estadod);
             hashMap.put("ciudad",""+ciudadd);

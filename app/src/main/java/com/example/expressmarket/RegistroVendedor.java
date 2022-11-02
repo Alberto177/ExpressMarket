@@ -228,7 +228,8 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
             HashMap<String, Object> hashMap= new HashMap<>();
             hashMap.put("uid",""+firebaseAuth.getUid());
             hashMap.put("email",""+emaild);
-            hashMap.put("nombre",""+nameTiendad);
+            hashMap.put("nombre",""+nombred);
+            hashMap.put("nombreT",""+nameTiendad);
             hashMap.put("phone",""+phoned);
             hashMap.put("envio",""+gastoEnvd);
             hashMap.put("estado",""+estadod);
@@ -285,7 +286,8 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
                                 HashMap<String, Object> hashMap= new HashMap<>();
                                 hashMap.put("uid",""+firebaseAuth.getUid());
                                 hashMap.put("email",""+emaild);
-                                hashMap.put("nombre",""+nameTiendad);
+                                hashMap.put("nombre",""+name);
+                                hashMap.put("nombreT",""+nameTiendad);
                                 hashMap.put("phone",""+phoned);
                                 hashMap.put("envio",""+gastoEnvd);
                                 hashMap.put("estado",""+estadod);
