@@ -50,6 +50,7 @@ import java.util.Locale;
 
 public class EditPerfilUsuario extends AppCompatActivity  implements LocationListener{
 
+    //componentes
     private ImageButton back,gps;
     private ImageView perfil;
     private EditText name,phone,estado,ciudad,direccion;
