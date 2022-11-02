@@ -70,7 +70,7 @@ public class OlviPass extends AppCompatActivity {
                     public void onSuccess(Void unused) {
                         //instrucciones enviadas
                         progressDialog.dismiss();
-                        Toast.makeText(OlviPass.this, "Instrucciones enviadas a tu correo ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OlviPass.this, "Instrucciones enviadas a tu correo", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

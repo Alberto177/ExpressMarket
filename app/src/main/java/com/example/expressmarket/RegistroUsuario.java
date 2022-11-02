@@ -63,7 +63,6 @@ public class RegistroUsuario extends AppCompatActivity implements LocationListen
     private static final int IMAGE_PICK_GALLERY_CODE=400;
     private static final int IMAGE_PICK_CAMERA_CODE=500;
 
-
     //permisos array
     private String[] locationPermissions;
     private String[] cameraPermissions;
@@ -138,6 +137,7 @@ public class RegistroUsuario extends AppCompatActivity implements LocationListen
             @Override
             public void onClick(View view) {
                 //registro de usuario
+                inputData();
             }
         });
         regVende.setOnClickListener(new View.OnClickListener() {
