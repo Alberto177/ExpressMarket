@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/layout/activity_edit_perfil_usuario.xml" value="0.1" />
+        <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/drawable/ic_baseline_apps_24_gray.xml" value="0.1" />
+        <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/drawable/ic_baseline_carritocompra.xml" value="0.1" />
+        <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/drawable/ic_baseline_salir.xml" value="0.1" />
+        <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/drawable/ic_title_gray.xml" value="0.1" />
+        <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/layout/activity_addproducto.xml" value="0.1" />
+        <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/layout/activity_edit_perfil_usuario.xml" value="0.22" />
         <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/layout/activity_edit_perfil_vendedor.xml" value="0.1" />
         <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -12,6 +17,7 @@
         <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/layout/activity_olvi_pass.xml" value="0.22" />
         <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/layout/activity_registro_usuario.xml" value="0.22" />
         <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/layout/activity_registro_vendedor.xml" value="0.22" />
+        <entry key="..\:/Users/alber/AndroidStudioProjects/ExpressMarket/app/src/main/res/layout/activity_vendedor_act.xml" value="0.1" />
       </map>
     </option>
   </component>

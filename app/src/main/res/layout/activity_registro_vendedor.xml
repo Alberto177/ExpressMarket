@@ -57,17 +57,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-       <com.blogspot.atifsoftware.circularimageview.CircularImageView
+
+        <ImageView
             android:id="@+id/perfilIv"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_below="@+id/iconIv"
+
             android:layout_centerHorizontal="true"
-            app:c_border="true"
-            app:c_borer_color="@color/colorPrimary"
-            app:c_border_width="1dp"
             android:src="@drawable/ic_person_gray"
-            />
+       />
+
 
         <EditText
             android:id="@+id/nameEt"
@@ -225,10 +224,5 @@
             android:layout_below="@id/cpasswordEt"/>
     </RelativeLayout>
 </ScrollView>
-
-
-
-
-
 
 </RelativeLayout>

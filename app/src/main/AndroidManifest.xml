@@ -33,6 +33,12 @@
             android:name=".MainVendedor"
             android:exported="false" />
         <activity
+            android:name=".MainVendedorAct"
+            android:exported="false" />
+        <activity
+            android:name=".Addproducto"
+            android:exported="false" />
+        <activity
             android:name=".OlviPass"
             android:exported="false" />
         <activity

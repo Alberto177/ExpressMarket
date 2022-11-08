@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainVendedorAct">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/shape_rect01"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/btnSalir"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ic_baseline_salir" />
+
+        <ImageButton
+            android:id="@+id/btnEdit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toStartOf="@+id/btnSalir"
+            android:background="@drawable/ic_baseline_edit" />
+        <!--Boton para agregar producto-->
+        <ImageButton
+            android:id="@+id/btnAddprod"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toStartOf="@+id/btnEdit"
+            android:background="@drawable/ic_baseline_carritocompra" />
+
+        <ImageView
+            android:id="@+id/imgPerfil"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/ic_store_gray"
+            />
+        
+        <TextView
+            android:id="@+id/nombreTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:layout_toEndOf="@id/imgPerfil"
+            android:textStyle= "bold"
+            android:textColor="@color/white"/>
+        <TextView
+        android:id="@+id/nombreTienda"
+        android:text="Tienda: "
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imgPerfil"
+        android:layout_below="@id/nombreTv"/>
+
+        <TextView
+            android:id="@+id/emailTv"
+            android:text="Correo: "
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgPerfil"
+            android:layout_below="@id/nombreTienda"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -55,14 +55,14 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
     //componentes
     private ImageButton back, gps;
     private ImageView perfil;
-    private EditText name,nameTienda,phone,gasto,estado, ciudad, direccion;
+    private EditText name, nameTienda, phone, gasto, estado, ciudad, direccion;
     private SwitchCompat shopOpen;
     private Button up;
 
     //constates de permisos
-    private static final  int LOCATION_REQUEST_CODE= 100;
-    private static final  int CAMERA_REQUEST_CODE= 200;
-    private static final  int STORAGE_REQUEST_CODE= 300;
+    private static final int LOCATION_REQUEST_CODE = 100;
+    private static final int CAMERA_REQUEST_CODE = 200;
+    private static final int STORAGE_REQUEST_CODE = 300;
     //imagen
     private static final int IMAGE_PICK_GALLERY_CODE = 400;
     private static final int IMAGE_PICK_CAMERA_CODE = 500;
@@ -74,8 +74,8 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
     //imagen uri
     private Uri image_uri;
 
-    private double latitud=0.0;
-    private double longitud=0.0;
+    private double latitud = 0.0;
+    private double longitud = 0.0;
 
     //mensajes
     private ProgressDialog progressDialog;
@@ -90,31 +90,31 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_perfil_vendedor);
 
-        back= findViewById(R.id.back);
-        gps= findViewById(R.id.gps);
-        perfil= findViewById(R.id.perfilIv);
-        name= findViewById(R.id.nameEt);
-        nameTienda= findViewById(R.id.nameTiendEt);
-        phone= findViewById(R.id.phoneEt);
-        gasto= findViewById(R.id.gastoEnvioEt);
-        estado= findViewById(R.id.EstadoEt);
-        ciudad= findViewById(R.id.ciudadEt);
-        direccion= findViewById(R.id.addresEt);
-        shopOpen= findViewById(R.id.tiendaOpenSwit);
-        up= findViewById(R.id.actualizarbtn);
+        back = findViewById(R.id.back);
+        gps = findViewById(R.id.gps);
+        perfil = findViewById(R.id.perfilIv);
+        name = findViewById(R.id.nameEt);
+        nameTienda = findViewById(R.id.nameTiendEt);
+        phone = findViewById(R.id.phoneEt);
+        gasto = findViewById(R.id.gastoEnvioEt);
+        estado = findViewById(R.id.EstadoEt);
+        ciudad = findViewById(R.id.ciudadEt);
+        direccion = findViewById(R.id.addresEt);
+        shopOpen = findViewById(R.id.tiendaOpenSwit);
+        up = findViewById(R.id.actualizarbtn);
 
         //permisos arrays
-        locationPermissions= new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
-        cameraPermissions= new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermissions= new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        locationPermissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
+        cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         //progress
-        progressDialog= new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Por favor espere");
         progressDialog.setCanceledOnTouchOutside(false);
 
         //firebase
-        firebaseAuth= FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
 
 
@@ -137,10 +137,10 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
             @Override
             public void onClick(View view) {
                 //detectar localizacion
-                if (checkLocationPermission()){
+                if (checkLocationPermission()) {
                     //detecta
                     detectionLocation();
-                }else{
+                } else {
                     //no detecta
                     requestLocationPermission();
                 }
@@ -156,17 +156,18 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
         });
     }
 
-    private String named,shopd,phoned,gastod,estadod,ciudadd,direcciond;
+    private String named, shopd, phoned, gastod, estadod, ciudadd, direcciond;
     private boolean open;
+
     private void inputData() {
-        named= name.getText().toString().trim();
-        shopd= nameTienda.getText().toString().trim();
-        phoned= phone.getText().toString().trim();
-        gastod= gasto.getText().toString().trim();
-        estadod= estado.getText().toString().trim();
-        ciudadd= ciudad.getText().toString().trim();
-        direcciond= direccion.getText().toString().trim();
-        open= shopOpen.isChecked(); //falso o verdadero
+        named = name.getText().toString().trim();
+        shopd = nameTienda.getText().toString().trim();
+        phoned = phone.getText().toString().trim();
+        gastod = gasto.getText().toString().trim();
+        estadod = estado.getText().toString().trim();
+        ciudadd = ciudad.getText().toString().trim();
+        direcciond = direccion.getText().toString().trim();
+        open = shopOpen.isChecked(); //falso o verdadero
 
         updatePerfil();
 
@@ -176,22 +177,22 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
         progressDialog.setMessage("Actualizando Perfil");
         progressDialog.show();
 
-        if (image_uri ==null){
+        if (image_uri == null) {
             //actualizar sin imagen
-            HashMap<String, Object> hashMap= new HashMap<>();
-            hashMap.put("nombre",""+named);
-            hashMap.put("nombreT",""+shopd);
-            hashMap.put("phone",""+phoned);
-            hashMap.put("gasto",""+gastod);
-            hashMap.put("estado",""+estadod);
-            hashMap.put("ciudad",""+ciudadd);
-            hashMap.put("direccion",""+direcciond);
-            hashMap.put("latitud",""+latitud);
-            hashMap.put("longitud",""+longitud);
-            hashMap.put("shopOpen",""+open);
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("nombre", "" + named);
+            hashMap.put("nombreT", "" + shopd);
+            hashMap.put("phone", "" + phoned);
+            hashMap.put("gasto", "" + gastod);
+            hashMap.put("estado", "" + estadod);
+            hashMap.put("ciudad", "" + ciudadd);
+            hashMap.put("direccion", "" + direcciond);
+            hashMap.put("latitud", "" + latitud);
+            hashMap.put("longitud", "" + longitud);
+            hashMap.put("shopOpen", "" + open);
 
             //actualiza a db
-            DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -206,44 +207,44 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
                         public void onFailure(@NonNull Exception e) {
                             //no actualizado
                             progressDialog.dismiss();
-                            Toast.makeText(EditPerfilVendedor.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditPerfilVendedor.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     });
 
-        }else {
+        } else {
             //actualizar con imagen
 
             //subir imagen
-            String filePathAndName="profile_images/"+""+firebaseAuth.getUid();
+            String filePathAndName = "profile_images/" + "" + firebaseAuth.getUid();
             //tomar
             StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
             storageReference.putFile(image_uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Task<Uri> uriTask= taskSnapshot.getStorage().getDownloadUrl();
-                            while(!uriTask.isSuccessful());
-                            Uri downloadImgeUri= uriTask.getResult();
+                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!uriTask.isSuccessful()) ;
+                            Uri downloadImgeUri = uriTask.getResult();
 
-                            if (uriTask.isSuccessful()){
+                            if (uriTask.isSuccessful()) {
                                 //imagen recibida
                                 //actualizar sin imagen
-                                HashMap<String, Object> hashMap= new HashMap<>();
-                                hashMap.put("nombre",""+named);
-                                hashMap.put("nombreT",""+shopd);
-                                hashMap.put("phone",""+phoned);
-                                hashMap.put("gasto",""+gastod);
-                                hashMap.put("estado",""+estadod);
-                                hashMap.put("ciudad",""+ciudadd);
-                                hashMap.put("direccion",""+direcciond);
-                                hashMap.put("latitud",""+latitud);
-                                hashMap.put("longitud",""+longitud);
-                                hashMap.put("shopOpen",""+open);
-                                hashMap.put("imagen",""+downloadImgeUri);
+                                HashMap<String, Object> hashMap = new HashMap<>();
+                                hashMap.put("nombre", "" + named);
+                                hashMap.put("nombreT", "" + shopd);
+                                hashMap.put("phone", "" + phoned);
+                                hashMap.put("gasto", "" + gastod);
+                                hashMap.put("estado", "" + estadod);
+                                hashMap.put("ciudad", "" + ciudadd);
+                                hashMap.put("direccion", "" + direcciond);
+                                hashMap.put("latitud", "" + latitud);
+                                hashMap.put("longitud", "" + longitud);
+                                hashMap.put("shopOpen", "" + open);
+                                hashMap.put("imagen", "" + downloadImgeUri);
 
                                 //actualiza a db
-                                DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
                                 ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -258,7 +259,7 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
                                             public void onFailure(@NonNull Exception e) {
                                                 //no actualizado
                                                 progressDialog.dismiss();
-                                                Toast.makeText(EditPerfilVendedor.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(EditPerfilVendedor.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                                             }
                                         });
@@ -270,7 +271,7 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(EditPerfilVendedor.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditPerfilVendedor.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -280,39 +281,39 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
     }
 
     private void checkUser() {
-        FirebaseUser user= firebaseAuth.getCurrentUser();
-        if (user == null){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user == null) {
             startActivity(new Intent(getApplicationContext(), Login.class));
             finish();
-        }else{
+        } else {
             loadMyInfo();
         }
     }
 
     private void loadMyInfo() {
         //manda la informacion del usuario
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds: snapshot.getChildren()){
-                            String tipo= ""+ds.child("tipo").getValue();
-                            String direct= ""+ds.child("direccion").getValue();
-                            String ciudadt= ""+ds.child("ciudad").getValue();
-                            String estadot= ""+ds.child("estado").getValue();
-                            String enviot= ""+ds.child("envio").getValue();
-                            String emailt= ""+ds.child("email").getValue();
-                            latitud= Double.parseDouble(""+ds.child("latitud").getValue());
-                            longitud= Double.parseDouble(""+ds.child("longitud").getValue());
-                            String namet= ""+ds.child("nombre").getValue();
-                            String onlinet= ""+ds.child("online").getValue();
-                            String phonet= ""+ds.child("phone").getValue();
-                            String imagent= ""+ds.child("imagen").getValue();
-                            String timet= ""+ds.child("timestamp").getValue();
-                            String namett= ""+ds.child("nombreT").getValue();
-                            String tiendaopentt= ""+ds.child("shopOpen").getValue();
-                            String uit= ""+ds.child("uid").getValue();
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            String tipo = "" + ds.child("tipo").getValue();
+                            String direct = "" + ds.child("direccion").getValue();
+                            String ciudadt = "" + ds.child("ciudad").getValue();
+                            String estadot = "" + ds.child("estado").getValue();
+                            String enviot = "" + ds.child("envio").getValue();
+                            String emailt = "" + ds.child("email").getValue();
+                            latitud = Double.parseDouble("" + ds.child("latitud").getValue());
+                            longitud = Double.parseDouble("" + ds.child("longitud").getValue());
+                            String namet = "" + ds.child("nombre").getValue();
+                            String onlinet = "" + ds.child("online").getValue();
+                            String phonet = "" + ds.child("phone").getValue();
+                            String imagent = "" + ds.child("imagen").getValue();
+                            String timet = "" + ds.child("timestamp").getValue();
+                            String namett = "" + ds.child("nombreT").getValue();
+                            String tiendaopentt = "" + ds.child("shopOpen").getValue();
+                            String uit = "" + ds.child("uid").getValue();
 
                             name.setText(namet);
                             phone.setText(phonet);
@@ -322,15 +323,15 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
                             nameTienda.setText(namett);
                             gasto.setText(enviot);
 
-                            if (tiendaopentt.equals("true")){
+                            if (tiendaopentt.equals("true")) {
                                 shopOpen.setChecked(true);
-                            }else {
+                            } else {
                                 shopOpen.setChecked(false);
                             }
 
                             try {
                                 Picasso.get().load(imagent).placeholder(R.drawable.ic_store_gray).into(perfil);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 perfil.setImageResource(R.drawable.ic_person_gray);
                             }
 
@@ -346,29 +347,29 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
 
     private void showImagePickDialog() {
         //opciones para tomar la foto
-        String[] options= {"Camara","Galeria"};
+        String[] options = {"Camara", "Galeria"};
         //dialogo
-        AlertDialog.Builder builder= new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Tomar Foto:")
                 .setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if(i==0){
+                        if (i == 0) {
                             //camara
-                            if(checkCameraPermission()){
+                            if (checkCameraPermission()) {
                                 //abre la camara
                                 pickFromCamera();
-                            }else{
+                            } else {
                                 //no abre la camara
                                 requestCameraPermission();
                             }
 
-                        }else{
+                        } else {
                             //galeria
-                            if(checkStoragePermission()){
+                            if (checkStoragePermission()) {
                                 //abre la galeria
                                 pickFromGallery();
-                            }else{
+                            } else {
                                 //no abre la galeria
                                 requestStoragePermission();
                             }
@@ -392,27 +393,27 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
 
     private boolean checkStoragePermission() {
         boolean result = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)==
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 (PackageManager.PERMISSION_GRANTED);
 
         return result;
     }
 
     private boolean checkCameraPermission() {
-        Boolean result= ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA)==
+        Boolean result = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) ==
                 (PackageManager.PERMISSION_GRANTED);
 
-        Boolean result1= ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)==
+        Boolean result1 = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 (PackageManager.PERMISSION_GRANTED);
 
         return result && result1;
     }
 
     private boolean checkLocationPermission() {
-        boolean result= ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)==
+        boolean result = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) ==
                 (PackageManager.PERMISSION_GRANTED);
 
         return result;
@@ -420,27 +421,47 @@ public class EditPerfilVendedor extends AppCompatActivity implements LocationLis
 
     private void pickFromGallery() {
         //intent toma la foto de la galeria
-        Intent intent= new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
     }
 
     private void pickFromCamera() {
         //intent toma la foto de camara
-        ContentValues contentValues= new ContentValues();
-        contentValues.put(MediaStore.Images.Media.TITLE,"Image Title");
-        contentValues.put(MediaStore.Images.Media.DESCRIPTION,"Image Description");
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Images.Media.TITLE, "Image Title");
+        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Image Description");
 
-        image_uri= getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-        Intent intent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
         startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
     }
 
     private void detectionLocation() {
         Toast.makeText(this, "Por favor espere...", Toast.LENGTH_SHORT).show();
-        locationManager= (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER,0,0, this);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 0, 0, this);
     }
 
     private void findAddres() {
