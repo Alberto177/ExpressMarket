@@ -51,7 +51,6 @@ public class MainVendedor extends AppCompatActivity {
                 checkUser();
             }
         });
-//bton
         editbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
