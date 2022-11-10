@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".Addproducto"
+            android:name=".activities.Addproducto"
             android:exported="false" />
         <activity
             android:name=".EditPerfilVendedor"
@@ -39,10 +39,10 @@
             android:name=".MainVendedorAct"
             android:exported="false" />
         <activity
-            android:name=".Addproducto"
+            android:name=".activities.Addproducto"
             android:exported="false" />
         <activity
-            android:name=".OlviPass"
+            android:name=".activities.OlviPass"
             android:exported="false" />
         <activity
             android:name=".RegistroUsuario"
@@ -50,7 +50,7 @@
         <activity
             android:name=".RegistroVendedor"
             android:exported="false" />
-        <activity android:name=".Login" />
+        <activity android:name=".activities.Login" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

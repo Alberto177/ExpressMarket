@@ -8,9 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.expressmarket.activities.Login;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,8 +28,10 @@ import java.util.HashMap;
 
 public class MainUsuario extends AppCompatActivity {
 
-    private TextView nametv;
+    private TextView nametv, emailtv, phonetv, tabShop, tabOrden;
+    private RelativeLayout shopRl, ordenRl;
     private ImageButton logout, editbtn;
+    private ImageView perfil;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
@@ -36,14 +41,24 @@ public class MainUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_main_usuario);
 
         nametv= findViewById(R.id.nameTv);
+        emailtv= findViewById(R.id.emailTv);
+        phonetv= findViewById(R.id.phoneTv);
+        tabShop= findViewById(R.id.tabShopsTv);
+        tabOrden= findViewById(R.id.tabOrdersTv);
         logout= findViewById(R.id.logoutBtn);
         editbtn= findViewById(R.id.editProfileBtn);
+        perfil= findViewById(R.id.perfilIv);
+        shopRl= findViewById(R.id.shopsRl);
+        ordenRl= findViewById(R.id.orderRl);
 
         progressDialog= new ProgressDialog(this);
         progressDialog.setTitle("Por favor espere un momento");
         progressDialog.setCanceledOnTouchOutside(false);
         firebaseAuth= FirebaseAuth.getInstance();
         checkUser();
+        //Tiendas
+        showShopUI();
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +75,44 @@ public class MainUsuario extends AppCompatActivity {
 
             }
         });
+        tabShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Mostrar tiendas
+                showShopUI();
+            }
+        });
+        tabOrden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Mostrar ordenes
+                showOrdenUI();
+            }
+        });
+    }
+
+    private void showShopUI() {
+        //Mostrar tiendas Ui, Ocultar Ordenes Ui
+        shopRl.setVisibility(View.VISIBLE);
+        ordenRl.setVisibility(View.GONE);
+
+        tabShop.setTextColor(getResources().getColor(R.color.Black));
+        tabShop.setBackgroundResource(R.drawable.shape_rect04);
+
+        tabOrden.setTextColor(getResources().getColor(R.color.white));
+        tabShop.setBackgroundResource(android.R.color.transparent);
+    }
+
+    private void showOrdenUI() {
+        //Mostrar ordenes Ui, Ocultar tiendas  Ui
+        shopRl.setVisibility(View.GONE);
+        ordenRl.setVisibility(View.VISIBLE);
+
+        tabShop.setTextColor(getResources().getColor(R.color.white));
+        tabShop.setBackgroundResource(android.R.color.transparent);
+
+        tabOrden.setTextColor(getResources().getColor(R.color.Black));
+        tabShop.setBackgroundResource(R.drawable.shape_rect04);
     }
 
     private void makeOffLine() {
