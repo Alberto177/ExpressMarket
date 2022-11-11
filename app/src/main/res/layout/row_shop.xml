@@ -34,7 +34,25 @@
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/nextIv"
             android:padding="5dp"
-            android:text="Cerrado"/>
+            android:text="Cerrado"
+            android:background="@drawable/shape_rect06"
+            android:textColor="@color/colorRed"
+            android:textSize="10sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@id/shopIv"
+            android:layout_toStartOf="@+id/nextIv">
+
+            <TextView
+                android:id="@+id/shopnameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+        </LinearLayout>
 
         <ImageView
             android:layout_width="wrap_content"
