@@ -33,7 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/nextIv"
-            android:layout_toEndOf="@+id/shopIv"/>
+            android:padding="5dp"
+            android:text="Cerrado"/>
 
         <ImageView
             android:layout_width="wrap_content"
