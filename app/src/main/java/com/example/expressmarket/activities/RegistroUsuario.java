@@ -1,4 +1,4 @@
-package com.example.expressmarket;
+package com.example.expressmarket.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,7 +7,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -30,8 +29,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.expressmarket.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -47,13 +48,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class RegistroVendedor extends AppCompatActivity implements LocationListener {
+public class RegistroUsuario extends AppCompatActivity implements LocationListener {
 
     private ImageButton back, gps;
     private ImageView perfil;
-    private EditText name, shopname, phone, envio, estado, ciudad, direccion, email,
-            pass, cpass;
-    private Button registro;
+    private EditText name, phone, estado, ciudad, direccion, correo, pass, cpass;
+    private Button registrar;
+    private TextView regVende;
 
     //Constantes
     private static final int LOCATION_REQUEST_CODE = 100;
@@ -63,7 +64,6 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
     private static final int IMAGE_PICK_GALLERY_CODE = 400;
     private static final int IMAGE_PICK_CAMERA_CODE = 500;
 
-
     //permisos array
     private String[] locationPermissions;
     private String[] cameraPermissions;
@@ -71,7 +71,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
     //tomar foto
     private Uri image_uri;
 
-    private double latitud = 0.0, longitud = 0.0;
+    private double latitud, longitud;
 
     private LocationManager locationManager;
 
@@ -81,22 +81,21 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro_vendedor);
+        setContentView(R.layout.activity_registro_usuario);
 
         back = findViewById(R.id.back);
         gps = findViewById(R.id.gps);
         perfil = findViewById(R.id.perfilIv);
         name = findViewById(R.id.nameEt);
-        shopname = findViewById(R.id.nameTiendEt);
         phone = findViewById(R.id.phoneEt);
-        envio = findViewById(R.id.gastoEnvioEt);
         estado = findViewById(R.id.EstadoEt);
         ciudad = findViewById(R.id.ciudadEt);
         direccion = findViewById(R.id.addresEt);
-        email = findViewById(R.id.emailEt);
+        correo = findViewById(R.id.emailEt);
         pass = findViewById(R.id.passwordEt);
         cpass = findViewById(R.id.cpasswordEt);
-        registro = findViewById(R.id.registroBtn);
+        registrar = findViewById(R.id.registroBtn);
+        regVende = findViewById(R.id.regisVendtTv);
 
         //init permisos array
         locationPermissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
@@ -132,32 +131,35 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
         perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //tomar imagen
                 showImagePickDialog();
             }
         });
-        registro.setOnClickListener(new View.OnClickListener() {
+        registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //registro de usuario
                 inputData();
             }
         });
-
+        regVende.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //abre la ventana del registro de vendedor
+                startActivity(new Intent(RegistroUsuario.this, RegistroVendedor.class));
+            }
+        });
     }
 
-    private String nombred, nameTiendad, phoned, gastoEnvd, ciudadd, estadod, direcciond, emaild, passd, cpassd;
+    private String nombred, phoned, ciudadd, estadod, direcciond, emaild, passd, cpassd;
 
     private void inputData() {
         //imput data
         nombred = name.getText().toString().trim();
-        nameTiendad = shopname.getText().toString().trim();
         phoned = phone.getText().toString().trim();
-        gastoEnvd = envio.toString().trim();
         ciudadd = ciudad.getText().toString().trim();
         estadod = estado.getText().toString().trim();
         direcciond = direccion.getText().toString().trim();
-        emaild = email.getText().toString().trim();
+        emaild = correo.getText().toString().trim();
         passd = pass.getText().toString().trim();
         cpassd = cpass.getText().toString().trim();
         //validacion
@@ -165,16 +167,8 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
             Toast.makeText(this, "Ingrese su nombre", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(nameTiendad)) {
-            Toast.makeText(this, "Ingrese el nombre de la tienda", Toast.LENGTH_SHORT).show();
-            return;
-        }
         if (TextUtils.isEmpty(phoned)) {
             Toast.makeText(this, "Ingrese su telefono", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(gastoEnvd)) {
-            Toast.makeText(this, "Ingrese su gasto de envio", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(direcciond)) {
@@ -193,6 +187,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
             Toast.makeText(this, "Por favor presiona el GPS para detectar su ubicacion", Toast.LENGTH_SHORT).show();
         }
         createAccount();
+
     }
 
     private void createAccount() {
@@ -213,7 +208,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
                     public void onFailure(@NonNull Exception e) {
                         //Cuenta no creada
                         progressDialog.dismiss();
-                        Toast.makeText(RegistroVendedor.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistroUsuario.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -229,19 +224,16 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("uid", "" + firebaseAuth.getUid());
             hashMap.put("email", "" + emaild);
-            hashMap.put("nombre", "" + nombred);
-            hashMap.put("nombreT", "" + nameTiendad);
+            hashMap.put("name", "" + nombred);
             hashMap.put("phone", "" + phoned);
-            hashMap.put("envio", "" + gastoEnvd);
             hashMap.put("estado", "" + estadod);
             hashMap.put("ciudad", "" + ciudadd);
             hashMap.put("direccion", "" + direcciond);
             hashMap.put("latitud", "" + latitud);
             hashMap.put("longitud", "" + longitud);
             hashMap.put("timestamp", "" + timestamp);
-            hashMap.put("tipo", "" + "Vendedor");
+            hashMap.put("tipo", "" + "Usuario");
             hashMap.put("online", "true");
-            hashMap.put("shopOpen", "true");
             hashMap.put("imagen", "");
 
             //save
@@ -252,7 +244,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
                         public void onSuccess(Void unused) {
                             //base actualizada
                             progressDialog.dismiss();
-                            startActivity(new Intent(RegistroVendedor.this, MainVendedor.class));
+                            startActivity(new Intent(RegistroUsuario.this, MainUsuario.class));
                             finish();
                         }
                     })
@@ -261,7 +253,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
                         public void onFailure(@NonNull Exception e) {
                             //error al  actualizar base
                             progressDialog.dismiss();
-                            startActivity(new Intent(RegistroVendedor.this, MainVendedor.class));
+                            startActivity(new Intent(RegistroUsuario.this, MainUsuario.class));
                             finish();
 
                         }
@@ -287,19 +279,15 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
                                 HashMap<String, Object> hashMap = new HashMap<>();
                                 hashMap.put("uid", "" + firebaseAuth.getUid());
                                 hashMap.put("email", "" + emaild);
-                                hashMap.put("nombre", "" + name);
-                                hashMap.put("nombreT", "" + nameTiendad);
                                 hashMap.put("phone", "" + phoned);
-                                hashMap.put("envio", "" + gastoEnvd);
                                 hashMap.put("estado", "" + estadod);
                                 hashMap.put("ciudad", "" + ciudadd);
                                 hashMap.put("direccion", "" + direcciond);
                                 hashMap.put("latitud", "" + latitud);
                                 hashMap.put("longitud", "" + longitud);
                                 hashMap.put("timestamp", "" + timestamp);
-                                hashMap.put("tipo", "" + "Vendedor");
+                                hashMap.put("tipo", "" + "Usuario");
                                 hashMap.put("online", "true");
-                                hashMap.put("shopOpen", "true");
                                 hashMap.put("imagen", "" + downloadImageUri); //url para subir la imagen
 
                                 //save
@@ -310,7 +298,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
                                             public void onSuccess(Void unused) {
                                                 //base actualizada
                                                 progressDialog.dismiss();
-                                                startActivity(new Intent(RegistroVendedor.this, MainVendedor.class));
+                                                startActivity(new Intent(RegistroUsuario.this, MainUsuario.class));
                                                 finish();
                                             }
                                         })
@@ -319,7 +307,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
                                             public void onFailure(@NonNull Exception e) {
                                                 //error al  actualizar base
                                                 progressDialog.dismiss();
-                                                startActivity(new Intent(RegistroVendedor.this, MainVendedor.class));
+                                                startActivity(new Intent(RegistroUsuario.this, MainUsuario.class));
                                                 finish();
 
                                             }
@@ -331,7 +319,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(RegistroVendedor.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistroUsuario.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -466,7 +454,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
         findDireccion();
 
     }
-///Revisar
+    ///Revisar
     private void findDireccion() {
         //Encontrar estado y ciudad
         Geocoder geocoder;
@@ -506,6 +494,7 @@ public class RegistroVendedor extends AppCompatActivity implements LocationListe
         Toast.makeText(this, "Por favor habilita la localizacion..", Toast.LENGTH_SHORT).show();
     }
 
+    //Revisar
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){

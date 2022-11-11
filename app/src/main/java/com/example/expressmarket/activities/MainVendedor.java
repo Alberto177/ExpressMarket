@@ -1,4 +1,4 @@
-package com.example.expressmarket;
+package com.example.expressmarket.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,12 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.expressmarket.activities.Login;
+import com.example.expressmarket.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,95 +24,42 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-public class MainUsuario extends AppCompatActivity {
+public class MainVendedor extends AppCompatActivity {
 
-    private TextView nametv, emailtv, phonetv, tabShop, tabOrden;
-    private RelativeLayout shopRl, ordenRl;
+    private TextView nametv;
     private ImageButton logout, editbtn;
-    private ImageView perfil;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_usuario);
+        setContentView(R.layout.activity_main_vendedor);
 
         nametv= findViewById(R.id.nameTv);
-        emailtv= findViewById(R.id.emailTv);
-        phonetv= findViewById(R.id.phoneTv);
-        tabShop= findViewById(R.id.tabShopsTv);
-        tabOrden= findViewById(R.id.tabOrdersTv);
         logout= findViewById(R.id.logoutBtn);
         editbtn= findViewById(R.id.editProfileBtn);
-        perfil= findViewById(R.id.perfilIv);
-        shopRl= findViewById(R.id.shopsRl);
-        ordenRl= findViewById(R.id.orderRl);
 
         progressDialog= new ProgressDialog(this);
         progressDialog.setTitle("Por favor espere un momento");
         progressDialog.setCanceledOnTouchOutside(false);
         firebaseAuth= FirebaseAuth.getInstance();
         checkUser();
-        //Tiendas
-        showShopUI();
-
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //modo offline
-                makeOffLine();
+                checkUser();
             }
         });
         editbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //editar perfil
-                startActivity(new Intent(MainUsuario.this, EditPerfilUsuario.class));
-
-            }
-        });
-        tabShop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Mostrar tiendas
-                showShopUI();
-            }
-        });
-        tabOrden.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Mostrar ordenes
-                showOrdenUI();
+                startActivity(new Intent(MainVendedor.this, EditPerfilVendedor.class));
             }
         });
     }
-
-    private void showShopUI() {
-        //Mostrar tiendas Ui, Ocultar Ordenes Ui
-        shopRl.setVisibility(View.VISIBLE);
-        ordenRl.setVisibility(View.GONE);
-
-        tabShop.setTextColor(getResources().getColor(R.color.Black));
-        tabShop.setBackgroundResource(R.drawable.shape_rect04);
-
-        tabOrden.setTextColor(getResources().getColor(R.color.white));
-        tabShop.setBackgroundResource(android.R.color.transparent);
-    }
-
-    private void showOrdenUI() {
-        //Mostrar ordenes Ui, Ocultar tiendas  Ui
-        shopRl.setVisibility(View.GONE);
-        ordenRl.setVisibility(View.VISIBLE);
-
-        tabShop.setTextColor(getResources().getColor(R.color.white));
-        tabShop.setBackgroundResource(android.R.color.transparent);
-
-        tabOrden.setTextColor(getResources().getColor(R.color.Black));
-        tabShop.setBackgroundResource(R.drawable.shape_rect04);
-    }
-
     private void makeOffLine() {
         progressDialog.setMessage("Verificando...");
 
@@ -137,7 +82,7 @@ public class MainUsuario extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         // actualizacion mal
                         progressDialog.dismiss();
-                        Toast.makeText(MainUsuario.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainVendedor.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -145,7 +90,7 @@ public class MainUsuario extends AppCompatActivity {
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if(user == null){
-            startActivity(new Intent(MainUsuario.this, Login.class));
+            startActivity(new Intent(MainVendedor.this, Login.class));
             finish();
         }else
         {

@@ -1,8 +1,9 @@
-package com.example.expressmarket;
+package com.example.expressmarket.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -29,7 +30,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.expressmarket.activities.Login;
+import com.example.expressmarket.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -49,13 +50,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class EditPerfilUsuario extends AppCompatActivity implements LocationListener {
+public class EditPerfilVendedor extends AppCompatActivity implements LocationListener {
 
     //componentes
     private ImageButton back, gps;
     private ImageView perfil;
-    private EditText name, phone, estado, ciudad, direccion;
-    private Button actualizar;
+    private EditText name, nameTienda, phone, gasto, estado, ciudad, direccion;
+    private SwitchCompat shopOpen;
+    private Button up;
 
     //constates de permisos
     private static final int LOCATION_REQUEST_CODE = 100;
@@ -82,20 +84,24 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
 
     private LocationManager locationManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_perfil_usuario);
+        setContentView(R.layout.activity_edit_perfil_vendedor);
 
         back = findViewById(R.id.back);
         gps = findViewById(R.id.gps);
-        perfil = findViewById(R.id.profileIv);
+        perfil = findViewById(R.id.perfilIv);
         name = findViewById(R.id.nameEt);
+        nameTienda = findViewById(R.id.nameTiendEt);
         phone = findViewById(R.id.phoneEt);
+        gasto = findViewById(R.id.gastoEnvioEt);
         estado = findViewById(R.id.EstadoEt);
         ciudad = findViewById(R.id.ciudadEt);
         direccion = findViewById(R.id.addresEt);
-        actualizar = findViewById(R.id.actualizarbtn);
+        shopOpen = findViewById(R.id.tiendaOpenSwit);
+        up = findViewById(R.id.actualizarbtn);
 
         //permisos arrays
         locationPermissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
@@ -110,6 +116,7 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
         //firebase
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +147,7 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
             }
         });
 
-        actualizar.setOnClickListener(new View.OnClickListener() {
+        up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //actualizado el perfil
@@ -149,14 +156,18 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
         });
     }
 
-    private String named, phoned, estadod, ciudadd, direcciond;
+    private String named, shopd, phoned, gastod, estadod, ciudadd, direcciond;
+    private boolean open;
 
     private void inputData() {
         named = name.getText().toString().trim();
+        shopd = nameTienda.getText().toString().trim();
         phoned = phone.getText().toString().trim();
+        gastod = gasto.getText().toString().trim();
         estadod = estado.getText().toString().trim();
         ciudadd = ciudad.getText().toString().trim();
         direcciond = direccion.getText().toString().trim();
+        open = shopOpen.isChecked(); //falso o verdadero
 
         updatePerfil();
 
@@ -170,12 +181,15 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
             //actualizar sin imagen
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("nombre", "" + named);
+            hashMap.put("nombreT", "" + shopd);
             hashMap.put("phone", "" + phoned);
+            hashMap.put("gasto", "" + gastod);
             hashMap.put("estado", "" + estadod);
             hashMap.put("ciudad", "" + ciudadd);
             hashMap.put("direccion", "" + direcciond);
             hashMap.put("latitud", "" + latitud);
             hashMap.put("longitud", "" + longitud);
+            hashMap.put("shopOpen", "" + open);
 
             //actualiza a db
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
@@ -185,7 +199,7 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
                         public void onSuccess(Void unused) {
                             //actualizado
                             progressDialog.dismiss();
-                            Toast.makeText(EditPerfilUsuario.this, "Perfil Actualizado..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditPerfilVendedor.this, "Perfil Actualizado..", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -193,7 +207,7 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
                         public void onFailure(@NonNull Exception e) {
                             //no actualizado
                             progressDialog.dismiss();
-                            Toast.makeText(EditPerfilUsuario.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditPerfilVendedor.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -218,12 +232,16 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
                                 //actualizar sin imagen
                                 HashMap<String, Object> hashMap = new HashMap<>();
                                 hashMap.put("nombre", "" + named);
+                                hashMap.put("nombreT", "" + shopd);
                                 hashMap.put("phone", "" + phoned);
+                                hashMap.put("gasto", "" + gastod);
                                 hashMap.put("estado", "" + estadod);
                                 hashMap.put("ciudad", "" + ciudadd);
                                 hashMap.put("direccion", "" + direcciond);
                                 hashMap.put("latitud", "" + latitud);
                                 hashMap.put("longitud", "" + longitud);
+                                hashMap.put("shopOpen", "" + open);
+                                hashMap.put("imagen", "" + downloadImgeUri);
 
                                 //actualiza a db
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
@@ -233,7 +251,7 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
                                             public void onSuccess(Void unused) {
                                                 //actualizado
                                                 progressDialog.dismiss();
-                                                Toast.makeText(EditPerfilUsuario.this, "Perfil Actualizado..", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(EditPerfilVendedor.this, "Perfil Actualizado..", Toast.LENGTH_SHORT).show();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -241,7 +259,7 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
                                             public void onFailure(@NonNull Exception e) {
                                                 //no actualizado
                                                 progressDialog.dismiss();
-                                                Toast.makeText(EditPerfilUsuario.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(EditPerfilVendedor.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                                             }
                                         });
@@ -253,7 +271,7 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(EditPerfilUsuario.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditPerfilVendedor.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -284,13 +302,17 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
                             String direct = "" + ds.child("direccion").getValue();
                             String ciudadt = "" + ds.child("ciudad").getValue();
                             String estadot = "" + ds.child("estado").getValue();
+                            String enviot = "" + ds.child("envio").getValue();
                             String emailt = "" + ds.child("email").getValue();
                             latitud = Double.parseDouble("" + ds.child("latitud").getValue());
                             longitud = Double.parseDouble("" + ds.child("longitud").getValue());
                             String namet = "" + ds.child("nombre").getValue();
+                            String onlinet = "" + ds.child("online").getValue();
                             String phonet = "" + ds.child("phone").getValue();
                             String imagent = "" + ds.child("imagen").getValue();
                             String timet = "" + ds.child("timestamp").getValue();
+                            String namett = "" + ds.child("nombreT").getValue();
+                            String tiendaopentt = "" + ds.child("shopOpen").getValue();
                             String uit = "" + ds.child("uid").getValue();
 
                             name.setText(namet);
@@ -298,6 +320,14 @@ public class EditPerfilUsuario extends AppCompatActivity implements LocationList
                             estado.setText(estadot);
                             ciudad.setText(ciudadt);
                             direccion.setText(direct);
+                            nameTienda.setText(namett);
+                            gasto.setText(enviot);
+
+                            if (tiendaopentt.equals("true")) {
+                                shopOpen.setChecked(true);
+                            } else {
+                                shopOpen.setChecked(false);
+                            }
 
                             try {
                                 Picasso.get().load(imagent).placeholder(R.drawable.ic_store_gray).into(perfil);
