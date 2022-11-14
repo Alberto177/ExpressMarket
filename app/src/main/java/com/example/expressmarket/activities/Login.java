@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.expressmarket.MainVendedorAct;
 import com.example.expressmarket.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -148,7 +149,7 @@ public class Login extends AppCompatActivity {
                             if (tipo.equals("Vendedor")){
                                 progressDialog.dismiss();
                                 //usuario es vendedor
-                                startActivity(new Intent(Login.this, MainVendedor.class));
+                                startActivity(new Intent(Login.this, MainVendedorAct.class));
                                 finish();
                             }else{
                                 progressDialog.dismiss();

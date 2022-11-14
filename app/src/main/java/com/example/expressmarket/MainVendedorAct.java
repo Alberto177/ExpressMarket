@@ -163,8 +163,8 @@ public class MainVendedorAct extends AppCompatActivity {
 
     private void loadProductosFiltrados(String selected) {
         listProductos = new ArrayList<>();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
-        reference.child(firebaseauth.getUid()).child("Productos")
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.child(firebaseauth.getUid()).child("Products")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -196,8 +196,8 @@ public class MainVendedorAct extends AppCompatActivity {
 
     private void cargarProductos() {
         listProductos = new ArrayList<>();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
-        reference.child(firebaseauth.getUid()).child("Productos")
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.child(firebaseauth.getUid()).child("Products")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

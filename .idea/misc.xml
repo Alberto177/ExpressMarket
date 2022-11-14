@@ -26,9 +26,12 @@
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/drawable/shape_rect04.xml" value="0.29" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/drawable/shape_rect05.xml" value="0.29" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_addproducto.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_editar_producto.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_escribir_resena.xml" value="0.1" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_main_vendedor.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_registro_vendedor.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_vendedor_act.xml" value="0.1" />
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/bs_detalle_productos_vendedor.xml" value="0.1" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/fila_productos_vendedor.xml" value="0.365625" />
       </map>
     </option>
