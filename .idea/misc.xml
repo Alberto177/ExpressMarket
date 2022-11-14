@@ -30,9 +30,11 @@
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_escribir_resena.xml" value="0.1" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_main_vendedor.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_registro_vendedor.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_resenias_tienda.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/activity_vendedor_act.xml" value="0.1" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/bs_detalle_productos_vendedor.xml" value="0.1" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/fila_productos_vendedor.xml" value="0.365625" />
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/ExpressMarkettt/app/src/main/res/layout/fila_resenias.xml" value="0.33" />
       </map>
     </option>
   </component>
