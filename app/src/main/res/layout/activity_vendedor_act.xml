@@ -7,8 +7,9 @@
     tools:context=".MainVendedorAct">
 
     <RelativeLayout
+        android:id="@+id/toolbarRl"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/shape_rect01"
         android:padding="10dp">
 
@@ -38,33 +39,116 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/ic_store_gray"
-            />
-        
+            android:background="@drawable/ic_store_gray" />
+
         <TextView
             android:id="@+id/nombreTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre"
             android:layout_toEndOf="@id/imgPerfil"
-            android:textStyle= "bold"
-            android:textColor="@color/white"/>
+            android:text="Nombre"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
         <TextView
-        android:id="@+id/nombreTienda"
-        android:text="Tienda: "
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/imgPerfil"
-        android:layout_below="@id/nombreTv"/>
+            android:id="@+id/nombreTienda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nombreTv"
+            android:layout_toEndOf="@id/imgPerfil"
+            android:text="Tienda: "
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/emailTv"
-            android:text="Correo: "
-            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/nombreTienda"
             android:layout_toEndOf="@id/imgPerfil"
-            android:layout_below="@id/nombreTienda"/>
+            android:text="Correo: "
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_rect03"
+            android:layout_below="@id/imgPerfil"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/tabProductos"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_rect04"
+                android:gravity="center"
+                android:text="Productos"
+                android:textColor="@color/Black" />
+            <TextView
+                android:id="@+id/tabOrdenes"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Ordenes"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_below="@+id/toolbarRl"
+        android:id="@+id/productosRl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <EditText
+            android:id="@+id/buscarProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_rect02"
+            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:drawablePadding="10dp"
+            android:layout_toStartOf="@+id/filtroProductoIb"
+            android:padding="10dp"
+            android:hint="Buscar"/>
+        <ImageButton
+            android:id="@+id/filtroProductoIb"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/ic_baseline_filter_list_24"
+            />
+        <TextView
+            android:id="@+id/productosFiltrados"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buscarProducto"
+            android:textColor="@color/Black"
+            android:text="Mostrando Todo"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/productosRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/productosFiltrados"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/fila_productos_vendedor"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/toolbarRl"
+        android:id="@+id/ordenesRl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     </RelativeLayout>
 </RelativeLayout>
