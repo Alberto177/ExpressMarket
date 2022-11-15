@@ -5,33 +5,38 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.expressmarket.FiltroProductosUsuario;
 import com.example.expressmarket.R;
 import com.example.expressmarket.models.ModeloProductos;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class AdapterProductUser extends  RecyclerView.Adapter<AdapterProductUser.HolderProductUser>{
+public class AdapterProductUser extends  RecyclerView.Adapter<AdapterProductUser.HolderProductUser> implements Filterable {
 
     private Context context;
-    public ArrayList<ModeloProductos> productsList;
+    public ArrayList<ModeloProductos> productsList, filterList;
+    private FiltroProductosUsuario filter;
 
     public AdapterProductUser(Context context, ArrayList<ModeloProductos> productsList) {
         this.context = context;
         this.productsList = productsList;
+        this.filterList = productsList;
     }
 
     @NonNull
     @Override
     public HolderProductUser onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.row_product_user, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.fila_producto, parent, false);
 
         return new HolderProductUser(view);
     }
@@ -70,12 +75,13 @@ public class AdapterProductUser extends  RecyclerView.Adapter<AdapterProductUser
         {
             holder.discountedPriceTv.setVisibility(View.GONE);
             holder.discountedNoteTv.setVisibility(View.GONE);
+            holder.originalPriceTv.setPaintFlags(0);
         }
 
         try {
-            Picasso.get().load(imagenProducto).placeholder(R.drawable.ic_add_shopping_primary).into(holder.productIconIv);
+            Picasso.get().load(imagenProducto).placeholder(R.drawable.ic_carritocompra_azul).into(holder.productIconIv);
         }catch (Exception e){
-            holder.productIconIv.setImageResource(R.drawable.ic_add_shopping_primary);
+            holder.productIconIv.setImageResource(R.drawable.ic_carritocompra_azul);
         }
 
         holder.addtoCart.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +106,15 @@ public class AdapterProductUser extends  RecyclerView.Adapter<AdapterProductUser
         return productsList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+
+        if (filter == null){
+            filter = new FiltroProductosUsuario(this, filterList);
+        }
+        return filter;
+    }
+
     class HolderProductUser extends RecyclerView.ViewHolder{
 
         private ImageView productIconIv;
@@ -108,13 +123,13 @@ public class AdapterProductUser extends  RecyclerView.Adapter<AdapterProductUser
         public HolderProductUser(@NonNull View itemView) {
             super(itemView);
 
-            productIconIv = itemView.findViewById(R.id.productIconIv);
-            discountedNoteTv = itemView.findViewById(R.id.discountedNoteTv);
-            titleTv = itemView.findViewById(R.id.titleTv);
-            descriptionTv = itemView.findViewById(R.id.descriptionTv);
-            addtoCart = itemView.findViewById(R.id.addtoCartTv);
-            discountedPriceTv = itemView.findViewById(R.id.discountedPriceTv);
-            originalPriceTv = itemView.findViewById(R.id.originalPriceTv);
+            productIconIv = itemView.findViewById(R.id.iconoProducto);
+            discountedNoteTv = itemView.findViewById(R.id.notaDescuento);
+            titleTv = itemView.findViewById(R.id.tituloTv);
+            descriptionTv = itemView.findViewById(R.id.descripcionTv);
+            addtoCart = itemView.findViewById(R.id.cantidadEt);
+            discountedPriceTv = itemView.findViewById(R.id.descuentoPrecioEt);
+            originalPriceTv = itemView.findViewById(R.id.precioOriginal);
 
         }
     }

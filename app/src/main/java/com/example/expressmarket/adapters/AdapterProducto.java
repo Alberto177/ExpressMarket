@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.expressmarket.FiltroProductosUsuario;
 import com.example.expressmarket.R;
 import com.example.expressmarket.activities.EditarProductoActivity;
 import com.example.expressmarket.activities.FiltroProductos;
@@ -82,6 +83,8 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.Holder
         }else {
             holder.precioDescuento.setVisibility(View.GONE);
             holder.notaDescuento.setVisibility(View.GONE);
+            holder.precioOriginal.setPaintFlags(0);
+
 
         }
         try {
@@ -156,6 +159,7 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.Holder
         }else {
             precioDescuentoTv.setVisibility(View.GONE);
             notaDescuentoTv.setVisibility(View.GONE);
+
 
         }
         try {
