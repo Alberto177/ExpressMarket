@@ -39,6 +39,15 @@
             android:textColor="@color/colorRed"
             android:textSize="10sp"/>
 
+        <ImageView
+            android:id="@+id/nextIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_next_gray"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
