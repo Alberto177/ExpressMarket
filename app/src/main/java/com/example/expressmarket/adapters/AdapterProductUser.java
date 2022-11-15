@@ -22,7 +22,6 @@ public class AdapterProductUser {
             productIconIv = itemView.findViewById(R.id.productIconIv);
             discountedNoteTv = itemView.findViewById(R.id.discountedNoteTv);
 
-
         }
     }
 }
