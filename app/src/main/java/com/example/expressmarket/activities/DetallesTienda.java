@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.expressmarket.R;
+import com.example.expressmarket.models.ModeloProductos;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,8 +36,8 @@ public class DetallesTienda extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
-    private ArrayList<ModelProduct> productsList;
-    private
+    private ArrayList<ModeloProductos> productsList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

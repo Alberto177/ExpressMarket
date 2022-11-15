@@ -93,10 +93,6 @@ public class AdapterProductUser extends  RecyclerView.Adapter<AdapterProductUser
             }
         });
 
-
-
-
-
     }
 
     @Override
@@ -119,7 +115,6 @@ public class AdapterProductUser extends  RecyclerView.Adapter<AdapterProductUser
             addtoCart = itemView.findViewById(R.id.addtoCartTv);
             discountedPriceTv = itemView.findViewById(R.id.discountedPriceTv);
             originalPriceTv = itemView.findViewById(R.id.originalPriceTv);
-
 
         }
     }

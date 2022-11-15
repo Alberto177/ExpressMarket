@@ -50,7 +50,7 @@ public class FiltroProductosUsuario extends Filter {
 
     @Override
     protected void publishResults(CharSequence charSequence, FilterResults results) {
-        adapter.productosList = (ArrayList<ModeloProductos>) results.values;
+        adapter.productsList = (ArrayList<ModeloProductos>) results.values;
         //recargar adapter
         adapter.notifyDataSetChanged();
     }
