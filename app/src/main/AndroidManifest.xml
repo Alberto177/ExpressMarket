@@ -21,17 +21,41 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".OlviPass"
+            android:name=".DetallesTienda"
             android:exported="false" />
         <activity
-            android:name=".RegistroUsuario"
+            android:name=".activities.Addproducto"
             android:exported="false" />
         <activity
-            android:name=".RegistroSelect"
+            android:name=".activities.EditPerfilVendedor"
             android:exported="false" />
-        <activity android:name=".Login" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.EditPerfilUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MainUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MainVendedor"
+            android:exported="false" />
+        <activity
+            android:name=".MainVendedorAct"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Addproducto"
+            android:exported="false" />
+        <activity
+            android:name=".activities.OlviPass"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegistroUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegistroVendedor"
+            android:exported="false" />
+        <activity android:name=".activities.Login" />
+        <activity
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

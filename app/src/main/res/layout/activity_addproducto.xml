@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.Addproducto">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/shape_rect01">
+
+        <ImageButton
+            android:id="@+id/btnback"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_back_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Añadir producto"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
+        
+    </RelativeLayout>
+
+    <!--Formulario-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/productoImg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_carritocompra_azul" />
+        <EditText
+            android:id="@+id/tituloEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Nombre del producto"
+            android:background="@drawable/shape_rect02"
+            android:drawableStart="@drawable/ic_title_gray"
+            android:drawablePadding="10dp"
+            android:inputType="textPersonName|textCapWords"
+            android:padding="10dp"
+            android:layout_below="@+id/productoImg"
+            />
+        <EditText
+            android:id="@+id/descripcionEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Descripción"
+            android:background="@drawable/shape_rect02"
+            android:drawableStart="@drawable/ic_title_gray"
+            android:drawablePadding="10dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="10dp"
+            android:layout_below="@+id/tituloEt"
+            />
+        <EditText
+            android:id="@+id/categoriaEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Categoria"
+            android:drawableEnd="@drawable/ic_down_arrow_gray"
+            android:background="@drawable/shape_rect02"
+            android:drawableStart="@drawable/ic_baseline_apps_24_gray"
+            android:drawablePadding="10dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="10dp"
+            android:layout_below="@+id/descripcionEt"
+            />
+
+        <EditText
+            android:id="@+id/cantidadEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/categoriaEt"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/shape_rect02"
+            android:drawableStart="@drawable/ic_peso_gray"
+            android:drawablePadding="10dp"
+            android:hint="Cantidad e.g kg, g, etc"
+            android:inputType="textCapWords"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/precioEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cantidadEt"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/shape_rect02"
+            android:drawableStart="@drawable/ic_precio_gray"
+            android:drawablePadding="10dp"
+            android:hint="Precio"
+            android:inputType="numberDecimal"
+            android:padding="10dp" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/descuentoSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/precioEt"
+            android:text="Descuento"
+            />
+
+        <EditText
+            android:id="@+id/descuentoPrecioEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/descuentoSwitch"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/shape_rect02"
+            android:drawableStart="@drawable/ic_descuento_gray"
+            android:drawablePadding="10dp"
+            android:hint="Precio con descuento"
+            android:inputType="numberDecimal"
+            android:padding="10dp" />
+        <EditText
+            android:id="@+id/descuentoNotaEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Nota de descuento e.g 10% de descuento"
+            android:background="@drawable/shape_rect02"
+            android:drawableStart="@drawable/ic_nota_gray"
+            android:drawablePadding="10dp"
+            android:inputType="textCapSentences"
+            android:padding="10dp"
+            android:layout_below="@+id/descuentoPrecioEt"
+            />
+
+        <Button
+            android:id="@+id/btnAddproducto"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/descuentoNotaEt"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:minWidth="150dp"
+            android:text="Añadir producto"
+
+            />
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".activities.ReseniasTiendaActivity">
+
+        <RelativeLayout
+            android:id="@+id/toolbarRl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/shape_rect01">
+            <ImageButton
+                android:id="@+id/btnSalir"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_back_white"
+                android:background="@null"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Reseña de la tienda"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity ="center_horizontal"
+            android:padding="10dp">
+            <ImageView
+                android:id="@+id/imgPerfil"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_store_gray"
+                />
+            <TextView
+                android:id="@+id/nombreTiendaTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre de la tienda"/>
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                />
+            <TextView
+                android:id="@+id/ratingsTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[4.3[100,098,577]]"
+                android:textSize="12sp"
+                />
+
+
+        </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reviewsRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/fila_resenias"
+
+        />
+</LinearLayout>
